@@ -23,19 +23,25 @@ export function useOrganization() {
 
       try {
 
-        const { data: org, error: orgError } = await supabase
+        const { data: user, error: userError } = await supabase
           .from("users")
-          .select("organizations(*)")
+          .select("*, organizations(*)")
           .eq("id", userId)
           .single();
 
-        if (orgError) {
-          console.error("Error fetching organization:", orgError);
+        if (userError) {
+          console.error("Error fetching organization:", userError);
           return;
         }
 
-        if (mounted && org?.organizations) {
-          setOrganization(org.organizations as Organization);
+        if (mounted && user?.organizations) {
+          // Type guard to ensure data matches Organization structure
+          const orgData = user.organizations;
+          if (orgData && typeof orgData === 'object' && 'id' in orgData && 'name' in orgData) {
+            setOrganization(orgData as Organization);
+          } else {
+            console.error('Invalid organization data received:', orgData);
+          }
         }
       } catch (error) {
         console.error("Error in useOrganization:", error);

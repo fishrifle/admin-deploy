@@ -151,7 +151,6 @@ export default function DonationsPage() {
           {organization && (
             <div className="text-right">
               <p className="text-sm text-gray-500">Donations for</p>
-              <p className="font-semibold text-lg">{organization.display_name || organization.name}</p>
             </div>
           )}
           <Button onClick={exportDonations} variant="outline">

@@ -57,8 +57,7 @@ export default function OnboardingPage() {
         toast({
           title: "Missing Information",
           description: "Please fill in all required fields",
-          variant: "destructive",
-        });
+          });
         return;
       }
       setCurrentStep(1);
@@ -74,7 +73,6 @@ export default function OnboardingPage() {
       toast({
         title: "Authentication Error",
         description: "Please sign in to continue",
-        variant: "destructive",
       });
       return;
     }
@@ -126,7 +124,6 @@ export default function OnboardingPage() {
       toast({
         title: "Setup Error",
         description: "Failed to create organization. Please try again.",
-        variant: "destructive",
       });
     } finally {
       setLoading(false);

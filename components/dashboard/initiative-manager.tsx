@@ -20,8 +20,6 @@ export function InitiativeManager({ initiatives, onChange }: InitiativeManagerPr
     name: "",
     description: "",
     goalAmount: "",
-    imageUrl: "",
-    suggestedAmounts: "10,25,50,100",
   });
 
   const handleAdd = () => {
@@ -29,28 +27,20 @@ export function InitiativeManager({ initiatives, onChange }: InitiativeManagerPr
       const initiative: Partial<Initiative> = {
         id: Date.now().toString(),
         name: newInitiative.name,
-        description: newInitiative.description || undefined,
-        image_url: newInitiative.imageUrl || undefined,
+        description: newInitiative.description || null,
         goal_amount: newInitiative.goalAmount
           ? Number(newInitiative.goalAmount)
-          : undefined,
+          : null,
         raised_amount: 0,
-        suggested_amounts: newInitiative.suggestedAmounts
-          .split(",")
-          .map(amount => Number(amount.trim()) * 100) // Convert to cents
-          .filter(amount => !isNaN(amount)),
         is_active: true,
         widget_id: "", // This will be set by the parent component
         created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
       };
       onChange([...initiatives, initiative as Initiative]);
       setNewInitiative({ 
         name: "", 
         description: "", 
         goalAmount: "", 
-        imageUrl: "",
-        suggestedAmounts: "10,25,50,100",
       });
       setIsAdding(false);
     }
@@ -64,16 +54,6 @@ export function InitiativeManager({ initiatives, onChange }: InitiativeManagerPr
     onChange(initiatives.filter((i) => i.id !== id));
   };
 
-  const formatSuggestedAmounts = (amounts: number[]): string => {
-    return amounts.map(amount => (amount / 100).toString()).join(", ");
-  };
-
-  const parseSuggestedAmounts = (value: string): number[] => {
-    return value
-      .split(",")
-      .map(amount => Number(amount.trim()) * 100) // Convert to cents
-      .filter(amount => !isNaN(amount));
-  };
 
   return (
     <div className="space-y-4">
@@ -99,30 +79,14 @@ export function InitiativeManager({ initiatives, onChange }: InitiativeManagerPr
                     rows={2}
                   />
                   <Input
-                    value={initiative.image_url || ""}
-                    onChange={(e) =>
-                      handleUpdate(initiative.id, { image_url: e.target.value })
-                    }
-                    placeholder="Image URL (optional)"
-                  />
-                  <Input
                     type="number"
                     value={initiative.goal_amount || ""}
                     onChange={(e) =>
                       handleUpdate(initiative.id, {
-                        goal_amount: Number(e.target.value) || undefined,
+                        goal_amount: Number(e.target.value) || null,
                       })
                     }
                     placeholder="Goal amount (optional)"
-                  />
-                  <Input
-                    value={formatSuggestedAmounts(initiative.suggested_amounts)}
-                    onChange={(e) =>
-                      handleUpdate(initiative.id, {
-                        suggested_amounts: parseSuggestedAmounts(e.target.value),
-                      })
-                    }
-                    placeholder="Suggested amounts (e.g., 10, 25, 50, 100)"
                   />
                 </div>
               ) : (
@@ -138,11 +102,9 @@ export function InitiativeManager({ initiatives, onChange }: InitiativeManagerPr
                       Goal: ${initiative.goal_amount.toLocaleString()}
                     </p>
                   )}
-                  {initiative.suggested_amounts.length > 0 && (
-                    <p className="text-sm text-gray-500 mt-1">
-                      Suggested: ${formatSuggestedAmounts(initiative.suggested_amounts)}
-                    </p>
-                  )}
+                  <p className="text-sm text-gray-500 mt-1">
+                    Raised: ${initiative.raised_amount.toLocaleString()}
+                  </p>
                 </div>
               )}
             </div>
@@ -210,26 +172,12 @@ export function InitiativeManager({ initiatives, onChange }: InitiativeManagerPr
             rows={2}
           />
           <Input
-            value={newInitiative.imageUrl}
-            onChange={(e) =>
-              setNewInitiative({ ...newInitiative, imageUrl: e.target.value })
-            }
-            placeholder="Image URL (optional)"
-          />
-          <Input
             type="number"
             value={newInitiative.goalAmount}
             onChange={(e) =>
               setNewInitiative({ ...newInitiative, goalAmount: e.target.value })
             }
             placeholder="Goal amount (optional)"
-          />
-          <Input
-            value={newInitiative.suggestedAmounts}
-            onChange={(e) =>
-              setNewInitiative({ ...newInitiative, suggestedAmounts: e.target.value })
-            }
-            placeholder="Suggested amounts (e.g., 10, 25, 50, 100)"
           />
           <div className="flex gap-2">
             <Button onClick={handleAdd} size="sm">
@@ -242,8 +190,6 @@ export function InitiativeManager({ initiatives, onChange }: InitiativeManagerPr
                   name: "", 
                   description: "", 
                   goalAmount: "", 
-                  imageUrl: "",
-                  suggestedAmounts: "10,25,50,100",
                 });
               }}
               size="sm"

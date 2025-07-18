@@ -14,7 +14,7 @@ export default function DashboardLayout({
         <header className="bg-white shadow-sm border-b">
           <div className="flex items-center justify-between px-6 py-4">
             <h1 className="text-xl font-semibold">Dashboard</h1>
-            <UserButton fallbackRedirectUrl="/" />
+            <UserButton />
           </div>
         </header>
         <main className="flex-1 overflow-y-auto p-6">{children}</main>

@@ -1,9 +1,11 @@
 // lib/supabaseClient.ts
-import { createClient } from "@supabase/supabase-js";
+import { createClient as _createClient } from "@supabase/supabase-js";
+import { Database } from "@/types/database.types";
 
-// these env vars must exist in .env.local
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+export const createClient = _createClient;
 
-// create and export a single client instance
-export const supabase = createClient(url, anonKey);
+// Client-side Supabase client with anonymous key for security
+export const supabase = _createClient<Database>(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);

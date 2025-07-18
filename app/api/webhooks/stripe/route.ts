@@ -1,6 +1,6 @@
+import { supabaseAdmin } from "@/lib/supabase/server";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const supabase = await createClient();
+  const supabase = supabaseAdmin;
 
   switch (event.type) {
     case "payment_intent.succeeded":
@@ -78,7 +78,7 @@ export async function POST(req: Request) {
 
       // Create invoice record
       await supabase.from("invoices").insert({
-        organization_id: invoice.metadata.organization_id,
+        organization_id: invoice.metadata?.organization_id || null,
         stripe_invoice_id: invoice.id,
         amount: invoice.amount_paid / 100,
         currency: invoice.currency,

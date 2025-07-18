@@ -1,16 +1,16 @@
 import { Database } from "./database.types";
 
-export type Initiative = Database["public"]["Tables"]["initiatives"]["Row"];
-export type InitiativeInsert = Database["public"]["Tables"]["initiatives"]["Insert"];
-export type InitiativeUpdate = Database["public"]["Tables"]["initiatives"]["Update"];
+// Initiative types now map to the causes table
+export type Initiative = Database["public"]["Tables"]["causes"]["Row"];
+export type InitiativeInsert = Database["public"]["Tables"]["causes"]["Insert"];
+export type InitiativeUpdate = Database["public"]["Tables"]["causes"]["Update"];
 
 export interface InitiativeConfig {
   name: string;
   description?: string;
-  imageUrl?: string;
-  goalAmount?: number;
-  suggestedAmounts: number[]; // amounts in cents
-  isActive: boolean;
+  goal_amount?: number;
+  is_active: boolean;
+  widget_id: string;
 }
 
 export interface InitiativeWithStats extends Initiative {

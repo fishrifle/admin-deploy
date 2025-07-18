@@ -44,7 +44,6 @@ export default async function SignInPage() {
             socialButtonsBlockButtonText: "font-medium",
           },
         }}
-        socialButtonsVariant="blockButton"
         redirectUrl="/dashboard"
         afterSignInUrl="/dashboard"
       />

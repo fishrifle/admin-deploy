@@ -89,7 +89,13 @@ export function useDonations(widgetId?: string) {
           },
           (payload) => {
             if (mounted) {
-              setDonations((prev) => [payload.new as Donation, ...prev.slice(0, 49)]);
+              // Type guard for donation data
+              const newDonation = payload.new;
+              if (newDonation && typeof newDonation === 'object' && 'id' in newDonation && 'amount' in newDonation) {
+                setDonations((prev) => [newDonation as Donation, ...prev.slice(0, 49)]);
+              } else {
+                console.error('Invalid donation data received:', newDonation);
+              }
             }
           }
         )

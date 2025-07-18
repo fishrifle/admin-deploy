@@ -1,6 +1,6 @@
+import { supabaseAdmin } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
-import { createClient } from "@/lib/supabase/server";
 import { createConnectAccount } from "@/lib/stripe/connect";
 
 export async function POST(req: Request) {
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const supabase = await createClient();
+    const supabase = supabaseAdmin;
 
     // Check if user has permission to modify this organization
     const { data: userData } = await supabase

@@ -71,7 +71,6 @@ export function OrganizationSettings({ organizationId }: OrganizationSettingsPro
       toast({
         title: "Error",
         description: "Failed to load organization details",
-        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -125,7 +124,6 @@ export function OrganizationSettings({ organizationId }: OrganizationSettingsPro
       toast({
         title: "Error",
         description: "Failed to update organization profile",
-        variant: "destructive",
       });
     } finally {
       setSaving(false);
@@ -140,7 +138,6 @@ export function OrganizationSettings({ organizationId }: OrganizationSettingsPro
       toast({
         title: "Error",
         description: "Failed to set up Stripe Connect",
-        variant: "destructive",
       });
     }
   };
@@ -153,7 +150,6 @@ export function OrganizationSettings({ organizationId }: OrganizationSettingsPro
       toast({
         title: "Error",
         description: "Failed to open Stripe dashboard",
-        variant: "destructive",
       });
     }
   };

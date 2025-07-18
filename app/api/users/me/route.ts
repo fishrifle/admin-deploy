@@ -1,3 +1,4 @@
+import { supabaseAdmin } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
 import { createClient } from "@/lib/supabase/server";
@@ -9,7 +10,7 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const supabase = await createClient();
+    const supabase = supabaseAdmin;
 
     // Check if user exists in our database
     const { data: userData, error } = await supabase

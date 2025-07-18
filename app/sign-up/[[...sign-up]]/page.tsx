@@ -12,7 +12,6 @@ export default function SignUpPage() {
             socialButtonsBlockButtonText: "font-medium",
           },
         }}
-        socialButtonsVariant="blockButton"
         redirectUrl="/onboarding"
         afterSignUpUrl="/onboarding"
       />

@@ -48,7 +48,6 @@ export default function TeamPage() {
         toast({
           title: "Error",
           description: "Failed to load team members",
-          variant: "destructive",
         });
       } finally {
         setLoading(false);
@@ -89,7 +88,6 @@ export default function TeamPage() {
       toast({
         title: "Error",
         description: "Failed to send invitation",
-        variant: "destructive",
       });
     } finally {
       setInviting(false);

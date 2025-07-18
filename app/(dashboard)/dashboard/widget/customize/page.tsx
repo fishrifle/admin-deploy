@@ -60,8 +60,7 @@ export default function CustomizeWidgetPage() {
         toast({
           title: "Error",
           description: "Failed to load widget configuration",
-          variant: "destructive",
-        });
+          });
       } finally {
         setLoading(false);
       }
@@ -131,7 +130,6 @@ export default function CustomizeWidgetPage() {
       toast({
         title: "Error",
         description: "Failed to save widget configuration",
-        variant: "destructive",
       });
     }
   };

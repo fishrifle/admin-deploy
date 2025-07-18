@@ -56,7 +56,6 @@ export default function InitiativesPage() {
       toast({
         title: "Error",
         description: "Failed to load initiatives",
-        variant: "destructive",
       });
     } finally {
       setLoading(false);

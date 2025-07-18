@@ -5,7 +5,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2024-06-20",
+  apiVersion: "2023-10-16",
 });
 
 export interface CreateConnectAccountParams {
@@ -73,7 +73,7 @@ export async function checkAccountOnboardingStatus(accountId: string): Promise<{
     const account = await stripe.accounts.retrieve(accountId);
     
     const onboardingComplete = account.charges_enabled && account.payouts_enabled;
-    const requiresAction = !onboardingComplete && account.requirements?.currently_due?.length > 0;
+    const requiresAction = !onboardingComplete && (account.requirements?.currently_due?.length || 0) > 0;
 
     let actionUrl: string | undefined;
     if (requiresAction) {
